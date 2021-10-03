@@ -7,7 +7,10 @@ package master;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import koneksi.config;
 
 /**
@@ -19,8 +22,9 @@ public class member extends javax.swing.JFrame {
     /**
      * Creates new form member
      */
-    public member() {
+    public member() throws SQLException {
         initComponents();
+        this.tampilData();
     }
 
     /**
@@ -45,7 +49,7 @@ public class member extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelMember = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,7 +98,7 @@ public class member extends javax.swing.JFrame {
         });
         getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelMember.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -105,7 +109,7 @@ public class member extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelMember);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, 290));
 
@@ -173,6 +177,10 @@ public class member extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
         }
+        idMember.setText("");
+        namaMember.setText("");
+        alamatMember.setText("");
+        telpMember.setText("");
     }//GEN-LAST:event_updateActionPerformed
 
     /**
@@ -205,7 +213,11 @@ public class member extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new member().setVisible(true);
+                try {
+                    new member().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -220,11 +232,38 @@ public class member extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton kembali;
     private javax.swing.JTextField namaMember;
     private javax.swing.JButton simpan;
+    private javax.swing.JTable tabelMember;
     private javax.swing.JTextField telpMember;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
+private DefaultTableModel tableModel;
+private String sql;
+public void tampilData() throws SQLException{
+    tableModel = new DefaultTableModel();
+    tableModel.addColumn("ID Member");
+    tableModel.addColumn("Nama Member");
+    tableModel.addColumn("Alamat");
+    tableModel.addColumn("Telp");
+    tabelMember.setModel(tableModel);
+    java.sql.Connection conn=(Connection)config.configDB();
+    try{
+        java.sql.Statement stm = conn.createStatement();
+        sql ="SELECT * FROM member";
+        java.sql.ResultSet res = stm.executeQuery(sql);
+        while (res.next()){
+            tableModel.addRow(new Object[]{
+            res.getString("id"),
+            res.getString("nama"),
+            res.getString("alamat"),
+            res.getString("telp")
+        });
+        }
+    }catch (SQLException e){
+        System.out.println(e.getMessage());
+    }
 }
+}
+

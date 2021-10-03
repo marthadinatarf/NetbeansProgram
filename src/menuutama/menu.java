@@ -5,6 +5,9 @@
  */
 package menuutama;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import login.login;
 import master.daftarLaundry;
 import master.member;
@@ -124,8 +127,12 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_transaksiActionPerformed
 
     private void memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberActionPerformed
-        // TODO add your handling code here:
-        new member().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new member().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_memberActionPerformed
 
     private void daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarActionPerformed
