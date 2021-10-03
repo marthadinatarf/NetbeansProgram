@@ -6,6 +6,7 @@
 package menuutama;
 
 import login.login;
+import master.daftarLaundry;
 import master.member;
 import master.pegawai;
 import transaksi.transaksi;
@@ -54,7 +55,7 @@ public class menu extends javax.swing.JFrame {
                 pegawaiActionPerformed(evt);
             }
         });
-        jPanel1.add(pegawai, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 100, -1));
+        jPanel1.add(pegawai, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 110, -1));
 
         member.setBackground(new java.awt.Color(255, 255, 51));
         member.setText("Member");
@@ -64,12 +65,17 @@ public class menu extends javax.swing.JFrame {
                 memberActionPerformed(evt);
             }
         });
-        jPanel1.add(member, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 100, -1));
+        jPanel1.add(member, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 110, -1));
 
         daftar.setBackground(new java.awt.Color(255, 255, 51));
-        daftar.setText("Daftar Harga");
+        daftar.setText("Daftar Barang");
         daftar.setBorderPainted(false);
-        jPanel1.add(daftar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 100, -1));
+        daftar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                daftarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(daftar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 110, -1));
 
         transaksi.setBackground(new java.awt.Color(255, 255, 51));
         transaksi.setText("Transaksi");
@@ -79,12 +85,12 @@ public class menu extends javax.swing.JFrame {
                 transaksiActionPerformed(evt);
             }
         });
-        jPanel1.add(transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 100, -1));
+        jPanel1.add(transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 110, -1));
 
         laporan.setBackground(new java.awt.Color(255, 255, 51));
         laporan.setText("Laporan");
         laporan.setBorderPainted(false);
-        jPanel1.add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 100, -1));
+        jPanel1.add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 110, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 460));
 
@@ -121,6 +127,11 @@ public class menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         new member().setVisible(true);
     }//GEN-LAST:event_memberActionPerformed
+
+    private void daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarActionPerformed
+        // TODO add your handling code here:
+        new daftarLaundry().setVisible(true);
+    }//GEN-LAST:event_daftarActionPerformed
 
     /**
      * @param args the command line arguments
