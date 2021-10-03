@@ -7,10 +7,7 @@ package master;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
 import koneksi.config;
 
 /**
@@ -133,6 +130,12 @@ public class member extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
+        if(idMember.getText().equals("")||namaMember.getText().equals("")||alamatMember.getText()
+                .equals("")||telpMember.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null, "Masukkan data dengan benar !","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "INSERT INTO member VALUES ('"+idMember.getText()+"','"+namaMember.getText()+
                     "','"+alamatMember.getText()+"','"+telpMember.getText()+"')";
