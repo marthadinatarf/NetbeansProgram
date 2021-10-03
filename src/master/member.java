@@ -15,7 +15,7 @@ import koneksi.config;
 
 /**
  *
- * @author dell
+ * @author reisa
  */
 public class member extends javax.swing.JFrame {
 

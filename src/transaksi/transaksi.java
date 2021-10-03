@@ -7,7 +7,7 @@ package transaksi;
 
 /**
  *
- * @author dell
+ * @author reisa
  */
 public class transaksi extends javax.swing.JFrame {
 

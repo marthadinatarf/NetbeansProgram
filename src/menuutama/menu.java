@@ -16,7 +16,7 @@ import transaksi.transaksi;
 
 /**
  *
- * @author dell
+ * @author reisa
  */
 public class menu extends javax.swing.JFrame {
 

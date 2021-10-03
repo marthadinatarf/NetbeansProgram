@@ -10,7 +10,7 @@ import menuutama.menu;
 
 /**
  *
- * @author dell
+ * @author reisa
  */
 public class pegawai extends javax.swing.JFrame {
 

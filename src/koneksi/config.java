@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author dell
+ * @author reisa
  */
 public class config {
     public static Connection con;

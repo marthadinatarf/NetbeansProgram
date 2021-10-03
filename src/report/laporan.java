@@ -7,7 +7,7 @@ package report;
 
 /**
  *
- * @author Riz
+ * @author reisa
  */
 public class laporan extends javax.swing.JFrame {
 

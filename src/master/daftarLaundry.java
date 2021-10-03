@@ -7,7 +7,7 @@ package master;
 
 /**
  *
- * @author dell
+ * @author reisa
  */
 public class daftarLaundry extends javax.swing.JFrame {
 
