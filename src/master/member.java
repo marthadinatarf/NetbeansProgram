@@ -5,6 +5,14 @@
  */
 package master;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+import koneksi.config;
+
 /**
  *
  * @author dell
@@ -27,15 +35,15 @@ public class member extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        idMember = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        namaMember = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        alamatMember = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        telpMember = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        simpan = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
@@ -45,25 +53,30 @@ public class member extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 110, -1));
+        getContentPane().add(idMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 110, -1));
 
         jLabel1.setText("Id Member");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 120, -1));
+        getContentPane().add(namaMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 120, -1));
 
         jLabel2.setText("Nama Member");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 100, -1));
+        getContentPane().add(alamatMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 100, -1));
 
         jLabel3.setText("Alamat");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 120, -1));
+        getContentPane().add(telpMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 120, -1));
 
         jLabel4.setText("Telp");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
-        jButton1.setText("Simpan");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        simpan.setText("Simpan");
+        simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         jButton2.setText("Update");
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
@@ -118,6 +131,21 @@ public class member extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_kembaliActionPerformed
 
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "INSERT INTO member VALUES ('"+idMember.getText()+"','"+namaMember.getText()+
+                    "','"+alamatMember.getText()+"','"+telpMember.getText()+"')";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_simpanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -154,7 +182,8 @@ public class member extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField alamatMember;
+    private javax.swing.JTextField idMember;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -164,10 +193,9 @@ public class member extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JButton kembali;
+    private javax.swing.JTextField namaMember;
+    private javax.swing.JButton simpan;
+    private javax.swing.JTextField telpMember;
     // End of variables declaration//GEN-END:variables
 }

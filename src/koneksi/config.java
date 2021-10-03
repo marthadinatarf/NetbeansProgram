@@ -7,6 +7,7 @@ package koneksi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -15,18 +16,16 @@ import java.sql.Statement;
  */
 public class config {
     public static Connection con;
-    public static Statement stm;
-    public static void main(String args[]){
+    public static Connection configDB()throws SQLException{
         try {
-            String url ="jdbc:mysql://localhost/laundrynew";
-            String user="root";
-            String pass="";
-            Class.forName("com.mysql.jdbc.Driver");
-            con =DriverManager.getConnection(url,user,pass);
-            stm = con.createStatement();
-            System.out.println("koneksi berhasil;");
+            String url="jdbc:mysql://localhost:3306/laundrynew"; //url database
+            String user="root"; //user database
+            String pass=""; //password database
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            con=DriverManager.getConnection(url, user, pass);            
         } catch (Exception e) {
-            System.err.println("koneksi gagal" +e.getMessage());
+            System.err.println("koneksi gagal "+e.getMessage()); //perintah menampilkan error pada koneksi
         }
-    }
+        return con;
+    }    
 }
