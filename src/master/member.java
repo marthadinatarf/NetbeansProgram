@@ -109,6 +109,11 @@ public class member extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelMember.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelMemberMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelMember);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, 290));
@@ -171,8 +176,10 @@ public class member extends javax.swing.JFrame {
             pst.setString(1, namaMember.getText());
             pst.setString(2, alamatMember.getText());
             pst.setString(3, telpMember.getText());
+            pst.setString(4, idMember.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+            tampilData();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
@@ -182,6 +189,15 @@ public class member extends javax.swing.JFrame {
         alamatMember.setText("");
         telpMember.setText("");
     }//GEN-LAST:event_updateActionPerformed
+
+    private void tabelMemberMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMemberMouseClicked
+        // TODO add your handling code here:
+        int mouseKlik = tabelMember.getSelectedRow();
+        idMember.setText(tableModel.getValueAt(mouseKlik, 0).toString());
+        namaMember.setText(tableModel.getValueAt(mouseKlik, 1).toString());
+        alamatMember.setText(tableModel.getValueAt(mouseKlik, 2).toString());
+        telpMember.setText(tableModel.getValueAt(mouseKlik, 3).toString());
+    }//GEN-LAST:event_tabelMemberMouseClicked
 
     /**
      * @param args the command line arguments
