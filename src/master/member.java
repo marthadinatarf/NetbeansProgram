@@ -41,7 +41,7 @@ public class member extends javax.swing.JFrame {
         telpMember = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         simpan = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        update = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -75,8 +75,13 @@ public class member extends javax.swing.JFrame {
         });
         getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
-        jButton2.setText("Update");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
+        getContentPane().add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
 
         jButton3.setText("Delete");
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
@@ -153,6 +158,23 @@ public class member extends javax.swing.JFrame {
         telpMember.setText("");
     }//GEN-LAST:event_simpanActionPerformed
 
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "UPDATE member set nama=?,alamat=?,telp=? where id=?";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, namaMember.getText());
+            pst.setString(2, alamatMember.getText());
+            pst.setString(3, telpMember.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_updateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -191,7 +213,6 @@ public class member extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamatMember;
     private javax.swing.JTextField idMember;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -204,5 +225,6 @@ public class member extends javax.swing.JFrame {
     private javax.swing.JTextField namaMember;
     private javax.swing.JButton simpan;
     private javax.swing.JTextField telpMember;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
