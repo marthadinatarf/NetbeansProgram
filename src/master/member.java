@@ -46,7 +46,7 @@ public class member extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         simpan = new javax.swing.JButton();
         update = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        hapus = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelMember = new javax.swing.JTable();
@@ -87,8 +87,13 @@ public class member extends javax.swing.JFrame {
         });
         getContentPane().add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
 
-        jButton3.setText("Delete");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
+        hapus.setText("Delete");
+        hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusActionPerformed(evt);
+            }
+        });
+        getContentPane().add(hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, -1));
 
         kembali.setText("Kembali");
         kembali.addActionListener(new java.awt.event.ActionListener() {
@@ -157,10 +162,12 @@ public class member extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+            tampilData();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         idMember.setText("");
         namaMember.setText("");
         alamatMember.setText("");
@@ -198,6 +205,37 @@ public class member extends javax.swing.JFrame {
         alamatMember.setText(tableModel.getValueAt(mouseKlik, 2).toString());
         telpMember.setText(tableModel.getValueAt(mouseKlik, 3).toString());
     }//GEN-LAST:event_tabelMemberMouseClicked
+
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+        // TODO add your handling code here:
+       if(idMember.getText().equals("")||namaMember.getText().equals("")||alamatMember.getText()
+                .equals("")||telpMember.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null, "Masukkan data dengan benar !","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+           
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin "
+                + "ingin menghapus data tersebut?", "Konfirmasi", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0){
+            try{
+              java.sql.Connection conn=(Connection)config.configDB();    
+              String sql = "DELETE FROM member where id ='" + idMember.getText() + "'";
+              java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+              pst.executeUpdate();
+              JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+              tampilData();
+                idMember.setText("");
+                namaMember.setText("");
+                alamatMember.setText("");
+                telpMember.setText("");
+                idMember.requestFocus();
+            }catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_hapusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,8 +278,8 @@ public class member extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamatMember;
+    private javax.swing.JButton hapus;
     private javax.swing.JTextField idMember;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
