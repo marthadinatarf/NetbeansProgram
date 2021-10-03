@@ -147,6 +147,10 @@ public class member extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
         }
+        idMember.setText("");
+        namaMember.setText("");
+        alamatMember.setText("");
+        telpMember.setText("");
     }//GEN-LAST:event_simpanActionPerformed
 
     /**
