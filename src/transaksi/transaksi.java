@@ -8,7 +8,10 @@ package transaksi;
 //import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import koneksi.config;
 
 /**
@@ -20,8 +23,9 @@ public class transaksi extends javax.swing.JFrame {
     /**
      * Creates new form transaksi
      */
-    public transaksi() {
+    public transaksi() throws SQLException {
         initComponents();
+        this.tampilData();
     }
 
     /**
@@ -56,7 +60,7 @@ public class transaksi extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelTransaksi = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
@@ -143,7 +147,7 @@ public class transaksi extends javax.swing.JFrame {
         });
         getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelTransaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -154,7 +158,12 @@ public class transaksi extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabelTransaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelTransaksiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelTransaksi);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 780, 210));
 
@@ -197,7 +206,16 @@ public class transaksi extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
-            //tampilData();
+            tampilData();
+                kdTransaksi.setText("");
+                namaTransaksi.setText("");
+                telp.setText("");
+                kdBarang.setText("");
+                namaBarang.setText("");
+                harga.setText("");
+                jumlah.setText("");
+                totalHarga.setText("");
+                diskon.setText("");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,11 +260,20 @@ public class transaksi extends javax.swing.JFrame {
             pst.setString(5, harga.getText());
             pst.setString(6, jumlah.getText());
             pst.setString(7, totalHarga.getText());
-            pst.setString(7, diskon.getText());
-            pst.setString(8, kdTransaksi.getText());
+            pst.setString(8, diskon.getText());
+            pst.setString(9, kdTransaksi.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
-            //tampilData();
+            tampilData();
+                kdTransaksi.setText("");
+                namaTransaksi.setText("");
+                telp.setText("");
+                kdBarang.setText("");
+                namaBarang.setText("");
+                harga.setText("");
+                jumlah.setText("");
+                totalHarga.setText("");
+                diskon.setText("");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
@@ -261,11 +288,11 @@ public class transaksi extends javax.swing.JFrame {
         if (confirm == 0){
             try{
               java.sql.Connection conn=(Connection)config.configDB();    
-              String sql = "DELETE FROM transaksi where id ='" + kdTransaksi.getText() + "'";
+              String sql = "DELETE FROM transaksi where transaksi='" + kdTransaksi.getText() + "'";
               java.sql.PreparedStatement pst = conn.prepareStatement(sql);
               pst.executeUpdate();
               JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
-              //tampilData();
+              tampilData();
                 kdTransaksi.setText("");
                 namaTransaksi.setText("");
                 telp.setText("");
@@ -280,6 +307,20 @@ public class transaksi extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void tabelTransaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelTransaksiMouseClicked
+        // TODO add your handling code here:
+        int mouseKlik = tabelTransaksi.getSelectedRow();
+        kdTransaksi.setText(tableModel.getValueAt(mouseKlik, 0).toString());
+        namaTransaksi.setText(tableModel.getValueAt(mouseKlik, 1).toString());
+        telp.setText(tableModel.getValueAt(mouseKlik, 2).toString());
+        kdBarang.setText(tableModel.getValueAt(mouseKlik, 3).toString());
+        namaBarang.setText(tableModel.getValueAt(mouseKlik, 4).toString());
+        harga.setText(tableModel.getValueAt(mouseKlik, 5).toString());
+        jumlah.setText(tableModel.getValueAt(mouseKlik, 6).toString());
+        totalHarga.setText(tableModel.getValueAt(mouseKlik, 7).toString());
+        diskon.setText(tableModel.getValueAt(mouseKlik, 8).toString());
+    }//GEN-LAST:event_tabelTransaksiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -311,7 +352,11 @@ public class transaksi extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new transaksi().setVisible(true);
+                try {
+                    new transaksi().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(transaksi.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -332,7 +377,6 @@ public class transaksi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jumlah;
     private javax.swing.JTextField kdBarang;
     private javax.swing.JTextField kdTransaksi;
@@ -340,8 +384,45 @@ public class transaksi extends javax.swing.JFrame {
     private javax.swing.JTextField namaBarang;
     private javax.swing.JTextField namaTransaksi;
     private javax.swing.JButton simpan;
+    private javax.swing.JTable tabelTransaksi;
     private javax.swing.JTextField telp;
     private javax.swing.JTextField totalHarga;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
+private DefaultTableModel tableModel;
+private String sql;
+public void tampilData() throws SQLException{
+    tableModel = new DefaultTableModel();
+    tableModel.addColumn("Kode Transaksi");
+    tableModel.addColumn("Nama Member");
+    tableModel.addColumn("Telp");
+    tableModel.addColumn("Kode Barang");
+    tableModel.addColumn("Nama Barang");
+    tableModel.addColumn("Harga");
+    tableModel.addColumn("Jumlah");
+    tableModel.addColumn("Total");
+    tableModel.addColumn("Diskon");
+    tabelTransaksi.setModel(tableModel);
+    java.sql.Connection conn=(Connection)config.configDB();
+    try{
+        java.sql.Statement stm = conn.createStatement();
+        sql ="SELECT * FROM transaksi";
+        java.sql.ResultSet res = stm.executeQuery(sql);
+        while (res.next()){
+            tableModel.addRow(new Object[]{
+            res.getString("transaksi"),
+            res.getString("nama"),
+            res.getString("telp"),
+            res.getString("kodeb"),
+            res.getString("barang"),
+            res.getString("harga"),
+            res.getString("jumlah"),
+            res.getString("total"),
+            res.getString("diskon")
+        });
+        }
+    }catch (SQLException e){
+        System.out.println(e.getMessage());
+    }
+}
 }
