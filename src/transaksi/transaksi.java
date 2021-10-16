@@ -51,9 +51,9 @@ public class transaksi extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         diskon = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        simpan = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -111,19 +111,29 @@ public class transaksi extends javax.swing.JFrame {
         jLabel9.setText("Diskon");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, -1, -1));
 
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        simpan.setText("Simpan");
+        simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                simpanActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, -1, -1));
+        getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, -1, -1));
 
-        jButton2.setText("Update");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, -1, -1));
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
+        getContentPane().add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, -1, -1));
 
-        jButton3.setText("Delete");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, -1, -1));
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, -1, -1));
 
         kembali.setText("Kembali");
         kembali.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +185,7 @@ public class transaksi extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_kembaliActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
         try{
             String sql = "INSERT INTO transaksi VALUES ('"+kdTransaksi.getText()+"','"+namaTransaksi.getText()+
@@ -192,7 +202,7 @@ public class transaksi extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_simpanActionPerformed
 
     private void hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaActionPerformed
         // TODO add your handling code here:
@@ -217,6 +227,59 @@ public class transaksi extends javax.swing.JFrame {
             diskon.setText("0");
         }
     }//GEN-LAST:event_jumlahKeyReleased
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "UPDATE transaksi set nama=?,telp=?,kodeb=?,barang=?,"
+                    + "harga=?,jumlah=?,total=?,diskon=?  where transaksi=?";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, namaTransaksi.getText());
+            pst.setString(2, telp.getText());
+            pst.setString(3, kdBarang.getText());
+            pst.setString(4, namaBarang.getText());
+            pst.setString(5, harga.getText());
+            pst.setString(6, jumlah.getText());
+            pst.setString(7, totalHarga.getText());
+            pst.setString(7, diskon.getText());
+            pst.setString(8, kdTransaksi.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+            //tampilData();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin "
+                + "ingin menghapus data tersebut?", "Konfirmasi", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0){
+            try{
+              java.sql.Connection conn=(Connection)config.configDB();    
+              String sql = "DELETE FROM transaksi where id ='" + kdTransaksi.getText() + "'";
+              java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+              pst.executeUpdate();
+              JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+              //tampilData();
+                kdTransaksi.setText("");
+                namaTransaksi.setText("");
+                telp.setText("");
+                kdBarang.setText("");
+                namaBarang.setText("");
+                harga.setText("");
+                jumlah.setText("");
+                totalHarga.setText("");
+                diskon.setText("");
+            }catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,11 +317,9 @@ public class transaksi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton delete;
     private javax.swing.JTextField diskon;
     private javax.swing.JTextField harga;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -278,7 +339,9 @@ public class transaksi extends javax.swing.JFrame {
     private javax.swing.JButton kembali;
     private javax.swing.JTextField namaBarang;
     private javax.swing.JTextField namaTransaksi;
+    private javax.swing.JButton simpan;
     private javax.swing.JTextField telp;
     private javax.swing.JTextField totalHarga;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
