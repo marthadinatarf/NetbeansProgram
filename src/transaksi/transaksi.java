@@ -200,12 +200,22 @@ public class transaksi extends javax.swing.JFrame {
 
     private void jumlahKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumlahKeyReleased
         // TODO add your handling code here:
-        int a,b;
+        int a,b,diskonHarga;
         a = Integer.parseInt(harga.getText());
         b = Integer.parseInt(jumlah.getText());
         int total;
         total = a*b;
         totalHarga.setText(String.valueOf(total));
+        //
+        if (total>=20000){
+            diskonHarga=(total-((total*5)/100));
+            diskon.setText(String.valueOf(diskonHarga));
+        }else if (total>=30000){
+            diskonHarga=(total-((total*10)/100));
+            diskon.setText(String.valueOf(diskonHarga));
+        }else {
+            diskon.setText("0");
+        }
     }//GEN-LAST:event_jumlahKeyReleased
 
     /**
