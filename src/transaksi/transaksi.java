@@ -5,6 +5,12 @@
  */
 package transaksi;
 
+//import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import koneksi.config;
+
 /**
  *
  * @author reisa
@@ -28,22 +34,22 @@ public class transaksi extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        kdTransaksi = new javax.swing.JTextField();
+        namaTransaksi = new javax.swing.JTextField();
+        telp = new javax.swing.JTextField();
+        kdBarang = new javax.swing.JTextField();
+        namaBarang = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        harga = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        jumlah = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        totalHarga = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        diskon = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -59,11 +65,11 @@ public class transaksi extends javax.swing.JFrame {
 
         jLabel1.setText("Kode Transaksi");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 110, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 140, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 110, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 130, -1));
+        getContentPane().add(kdTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 110, -1));
+        getContentPane().add(namaTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 130, -1));
+        getContentPane().add(telp, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 140, -1));
+        getContentPane().add(kdBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 110, -1));
+        getContentPane().add(namaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 130, -1));
 
         jLabel2.setText("Nama");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
@@ -76,24 +82,41 @@ public class transaksi extends javax.swing.JFrame {
 
         jLabel5.setText("Nama barang");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, -1, -1));
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 120, -1));
+
+        harga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 120, -1));
 
         jLabel6.setText("Harga");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, -1, -1));
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 100, -1));
+
+        jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jumlahKeyReleased(evt);
+            }
+        });
+        getContentPane().add(jumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 100, -1));
 
         jLabel7.setText("Jumlah");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, -1, -1));
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 120, -1));
+        getContentPane().add(totalHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 120, -1));
 
         jLabel8.setText("Total");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, -1, -1));
-        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 130, 120, -1));
+        getContentPane().add(diskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 130, 120, -1));
 
         jLabel9.setText("Diskon");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, -1, -1));
 
         jButton1.setText("Simpan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, -1, -1));
 
         jButton2.setText("Update");
@@ -152,6 +175,39 @@ public class transaksi extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_kembaliActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "INSERT INTO transaksi VALUES ('"+kdTransaksi.getText()+"','"+namaTransaksi.getText()+
+                    "','"+telp.getText()+"','"+kdBarang.getText()+"','"+
+                    namaBarang.getText()+"','"+harga.getText()+"','"+
+                    jumlah.getText()+"','"+totalHarga.getText()+"','"+
+                    diskon.getText()+"')";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+            //tampilData();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargaActionPerformed
+
+    private void jumlahKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumlahKeyReleased
+        // TODO add your handling code here:
+        int a,b;
+        a = Integer.parseInt(harga.getText());
+        b = Integer.parseInt(jumlah.getText());
+        int total;
+        total = a*b;
+        totalHarga.setText(String.valueOf(total));
+    }//GEN-LAST:event_jumlahKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -188,6 +244,8 @@ public class transaksi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField diskon;
+    private javax.swing.JTextField harga;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -204,15 +262,13 @@ public class transaksi extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jumlah;
+    private javax.swing.JTextField kdBarang;
+    private javax.swing.JTextField kdTransaksi;
     private javax.swing.JButton kembali;
+    private javax.swing.JTextField namaBarang;
+    private javax.swing.JTextField namaTransaksi;
+    private javax.swing.JTextField telp;
+    private javax.swing.JTextField totalHarga;
     // End of variables declaration//GEN-END:variables
 }
