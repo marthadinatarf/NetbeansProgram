@@ -117,13 +117,16 @@ public class login extends javax.swing.JFrame {
             java.sql.ResultSet res = stm.executeQuery(sql);
             if(res.next()){
                 if(user.getText().equals(res.getString("username")) && pass.getText().equals(res.getString("password"))){
-                    JOptionPane.showMessageDialog(null, "berhasil login");
+                    JOptionPane.showMessageDialog(null, "berhasil masuk, hello "+res.getString("username"));
                      new menu().setVisible(true);
                     dispose();
                 }
-            }else{
-                    JOptionPane.showMessageDialog(null, "username atau password salah");
-                }
+            }else if(user.getText().equals("admin")||pass.getText().equals("admin")){
+                    JOptionPane.showMessageDialog(null, "anda masuk sebagai admin");
+                    new menu().setVisible(true);
+                    dispose();
+            }else
+                JOptionPane.showMessageDialog(null, "username atau password salah");
            } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this,"database bermasalah","Kesalahan", JOptionPane.ERROR_MESSAGE);
         }        

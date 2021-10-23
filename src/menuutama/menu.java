@@ -94,6 +94,11 @@ public class menu extends javax.swing.JFrame {
         laporan.setBackground(new java.awt.Color(255, 255, 51));
         laporan.setText("Laporan");
         laporan.setBorderPainted(false);
+        laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporanActionPerformed(evt);
+            }
+        });
         jPanel1.add(laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 110, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 460));
@@ -158,6 +163,11 @@ public class menu extends javax.swing.JFrame {
             Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_daftarActionPerformed
+
+    private void laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporanActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"WORK IN PROGRESS!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_laporanActionPerformed
 
     /**
      * @param args the command line arguments
