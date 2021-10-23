@@ -5,7 +5,10 @@
  */
 package login;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import koneksi.config;
 import menuutama.menu;
 
 /**
@@ -107,12 +110,23 @@ public class login extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Masukkan data dengan benar !","Kesalahan", JOptionPane.ERROR_MESSAGE);
         return;
         } else
-        JOptionPane.showMessageDialog(null, "Login Berhasi....");
-        new menu().setVisible(true);
-        dispose();
-        {
-            
-        }
+            try{
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            String sql = "SELECT * FROM petugas WHERE username='"+user.getText()+"' AND password='"+pass.getText()+"'";
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            if(res.next()){
+                if(user.getText().equals(res.getString("username")) && pass.getText().equals(res.getString("password"))){
+                    JOptionPane.showMessageDialog(null, "berhasil login");
+                     new menu().setVisible(true);
+                    dispose();
+                }
+            }else{
+                    JOptionPane.showMessageDialog(null, "username atau password salah");
+                }
+           } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this,"database bermasalah","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        }        
     }//GEN-LAST:event_loginActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed

@@ -8,6 +8,7 @@ package menuutama;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import login.login;
 import master.daftarLaundry;
 import master.member;
@@ -121,8 +122,14 @@ public class menu extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin "
+                + "ingin keluar ?", "Konfirmasi", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0){
+        JOptionPane.showMessageDialog(null, "berhasil keluar dari aplikasi");
         new login().setVisible(true);
         dispose();
+        }
     }//GEN-LAST:event_logoutActionPerformed
 
     private void transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transaksiActionPerformed
