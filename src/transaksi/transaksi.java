@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import koneksi.config;
+import tabelDaftarHarga.tabelHarga;
 
 /**
  *
@@ -168,6 +169,11 @@ public class transaksi extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 780, 210));
 
         jButton5.setText("Cari");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 153, 255));
@@ -338,6 +344,11 @@ public class transaksi extends javax.swing.JFrame {
         totalHarga.setText(tableModel.getValueAt(mouseKlik, 7).toString());
         diskon.setText(tableModel.getValueAt(mouseKlik, 8).toString());
     }//GEN-LAST:event_tabelTransaksiMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new tabelHarga().setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
