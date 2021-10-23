@@ -112,9 +112,19 @@ public class pegawai extends javax.swing.JFrame {
         getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, -1, -1));
 
         update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
         getContentPane().add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, -1, -1));
 
         delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
         getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
 
         kembali.setText("Kembali");
@@ -212,6 +222,61 @@ public class pegawai extends javax.swing.JFrame {
         //new menu().setVisible(true);
         dispose();
     }//GEN-LAST:event_kembaliActionPerformed
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "UPDATE member set nama=?,alamat=?,telp=? where id=?";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, nama.getText());
+            pst.setString(2, alamat.getText());
+            pst.setString(3, telp.getText());
+            pst.setString(4, username.getText());
+            pst.setString(5, password.getText());
+            pst.setString(6, konfirmasi.getText());
+            pst.setString(7, id.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+            //tampilData();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        id.setText("");
+        nama.setText("");
+        alamat.setText("");
+        telp.setText("");
+        username.setText("");
+        password.setText("");
+        konfirmasi.setText("");
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin "
+                + "ingin menghapus data tersebut?", "Konfirmasi", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0){
+            try{
+              java.sql.Connection conn=(Connection)config.configDB();    
+              String sql = "DELETE FROM petugas where id ='" + id.getText() + "'";
+              java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+              pst.executeUpdate();
+              JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+              //tampilData();
+                 id.setText("");
+                 nama.setText("");
+                 alamat.setText("");
+                 telp.setText("");
+                 username.setText("");
+                 password.setText("");
+                 konfirmasi.setText("");
+            }catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments
