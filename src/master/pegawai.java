@@ -5,7 +5,10 @@
  */
 package master;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import koneksi.config;
 import menuutama.menu;
 
 /**
@@ -46,9 +49,9 @@ public class pegawai extends javax.swing.JFrame {
         konfirmasi = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         cek = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        simpan = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -100,19 +103,19 @@ public class pegawai extends javax.swing.JFrame {
         cek.setText("........");
         getContentPane().add(cek, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, -1, -1));
 
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        simpan.setText("Simpan");
+        simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                simpanActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, -1, -1));
+        getContentPane().add(simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, -1, -1));
 
-        jButton2.setText("Update");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, -1, -1));
+        update.setText("Update");
+        getContentPane().add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, -1, -1));
 
-        jButton3.setText("Delete");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
+        delete.setText("Delete");
+        getContentPane().add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
 
         kembali.setText("Kembali");
         kembali.addActionListener(new java.awt.event.ActionListener() {
@@ -178,15 +181,31 @@ public class pegawai extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_idKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
-        if(id.getText().equals("")||nama.getText().equals(""))
-        {
-        JOptionPane.showMessageDialog(null, "Masukkan data dengan benar !","Kesalahan", JOptionPane.ERROR_MESSAGE);
-        return;
-        } else
-        JOptionPane.showMessageDialog(null, "Login Berhasi....");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try{
+            String sql = "INSERT INTO petugas VALUES ('"+id.getText()+"','"+nama.getText()+
+                    "','"+alamat.getText()+"','"+telp.getText()+"','"+
+                    username.getText()+"','"+password.getText()+"','"+
+                    konfirmasi.getText()+"')";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
+            //tampilData();
+                id.setText("");
+                nama.setText("");
+                alamat.setText("");
+                telp.setText("");
+                username.setText("");
+                password.setText("");
+                konfirmasi.setText("");
+            } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
+                //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
+        }          
+  
+    }//GEN-LAST:event_simpanActionPerformed
 
     private void kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliActionPerformed
         // TODO add your handling code here:
@@ -232,10 +251,8 @@ public class pegawai extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamat;
     private javax.swing.JLabel cek;
+    private javax.swing.JButton delete;
     private javax.swing.JTextField id;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -250,7 +267,9 @@ public class pegawai extends javax.swing.JFrame {
     private javax.swing.JPasswordField konfirmasi;
     private javax.swing.JTextField nama;
     private javax.swing.JPasswordField password;
+    private javax.swing.JButton simpan;
     private javax.swing.JTextField telp;
+    private javax.swing.JButton update;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

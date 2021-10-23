@@ -122,8 +122,12 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     private void transaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transaksiActionPerformed
-        // TODO add your handling code here:
-        new transaksi().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new transaksi().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_transaksiActionPerformed
 
     private void memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberActionPerformed
