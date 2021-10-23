@@ -196,6 +196,14 @@ public class transaksi extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
+        if(kdTransaksi.getText().equals("")||namaTransaksi.getText().equals("")||telp.getText()
+                .equals("")||kdBarang.getText().equals("")||namaBarang.getText().equals("")
+                ||harga.getText().equals("")||jumlah.getText().equals("")||totalHarga.getText().equals("")
+                ||diskon.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null, "Masukkan data dengan benar !","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "INSERT INTO transaksi VALUES ('"+kdTransaksi.getText()+"','"+namaTransaksi.getText()+
                     "','"+telp.getText()+"','"+kdBarang.getText()+"','"+
@@ -248,6 +256,15 @@ public class transaksi extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+        if(kdTransaksi.getText().equals("")||namaTransaksi.getText().equals("")||telp.getText()
+                .equals("")||kdBarang.getText().equals("")||namaBarang.getText().equals("")
+                ||harga.getText().equals("")||jumlah.getText().equals("")||totalHarga.getText().equals("")
+                ||diskon.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null,"Data Gagal diubah! silakan klik data tabel yg ingin "
+                + "diubah","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "UPDATE transaksi set nama=?,telp=?,kodeb=?,barang=?,"
                     + "harga=?,jumlah=?,total=?,diskon=?  where transaksi=?";

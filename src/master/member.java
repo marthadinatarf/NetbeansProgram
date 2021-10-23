@@ -176,6 +176,13 @@ public class member extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+        if(idMember.getText().equals("")||namaMember.getText().equals("")||alamatMember.getText()
+                .equals("")||telpMember.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null, "Data Gagal diubah! silakan klik data tabel yg ingin "
+                + "diubah","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "UPDATE member set nama=?,alamat=?,telp=? where id=?";
             java.sql.Connection conn=(Connection)config.configDB();

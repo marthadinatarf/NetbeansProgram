@@ -167,6 +167,12 @@ public class daftarLaundry extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+        if(kdBarang.getText().equals("")||namaBarang.getText().equals("")||harga.getText().equals(""))
+        {
+         JOptionPane.showMessageDialog(null, "Data Gagal diubah! silakan klik data tabel yg ingin "
+                + "diubah","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "UPDATE daftar set barang=?,harga=? where kodeb=?";
             java.sql.Connection conn=(Connection)config.configDB();

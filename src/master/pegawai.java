@@ -241,6 +241,14 @@ public class pegawai extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+        if(id.getText().equals("")||nama.getText().equals("")||alamat.getText()
+                .equals("")||telp.getText().equals("")||username.getText().equals("")
+                ||password.getText().equals("")||konfirmasi.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null, "Data Gagal diubah! silakan klik data tabel yg ingin "
+                + "diubah","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "UPDATE petugas set nama=?,alamat=?,telp=?,username=?,password=?,konfirmasi=? "
                     + "where id=?";

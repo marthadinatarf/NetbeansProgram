@@ -144,8 +144,12 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_memberActionPerformed
 
     private void daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daftarActionPerformed
-        // TODO add your handling code here:
-        new daftarLaundry().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new daftarLaundry().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_daftarActionPerformed
 
     /**
