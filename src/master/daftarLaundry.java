@@ -7,7 +7,10 @@ package master;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import koneksi.config;
 
 /**
@@ -19,8 +22,9 @@ public class daftarLaundry extends javax.swing.JFrame {
     /**
      * Creates new form daftarLaundry
      */
-    public daftarLaundry() {
+    public daftarLaundry() throws SQLException {
         initComponents();
+        tampilData();
     }
 
     /**
@@ -72,6 +76,11 @@ public class daftarLaundry extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelBarangMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelBarang);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 360, 290));
@@ -141,7 +150,7 @@ public class daftarLaundry extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
-            //tampilData();
+            tampilData();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
@@ -167,7 +176,7 @@ public class daftarLaundry extends javax.swing.JFrame {
             pst.setString(3, kdBarang.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
-            //tampilData();
+            tampilData();
             kdBarang.setText("");
             namaBarang.setText("");
             harga.setText("");
@@ -189,7 +198,7 @@ public class daftarLaundry extends javax.swing.JFrame {
               java.sql.PreparedStatement pst = conn.prepareStatement(sql);
               pst.executeUpdate();
               JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
-              //tampilData();
+              tampilData();
                  kdBarang.setText("");
                  namaBarang.setText("");
                  harga.setText("");
@@ -198,6 +207,14 @@ public class daftarLaundry extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void tabelBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBarangMouseClicked
+        // TODO add your handling code here:
+        int mouseKlik = tabelBarang.getSelectedRow();
+        kdBarang.setText(tableModel.getValueAt(mouseKlik, 0).toString());
+        namaBarang.setText(tableModel.getValueAt(mouseKlik, 1).toString());
+        harga.setText(tableModel.getValueAt(mouseKlik, 2).toString());
+    }//GEN-LAST:event_tabelBarangMouseClicked
 
     /**
      * @param args the command line arguments
@@ -229,7 +246,11 @@ public class daftarLaundry extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new daftarLaundry().setVisible(true);
+                try {
+                    new daftarLaundry().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(daftarLaundry.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -249,4 +270,28 @@ public class daftarLaundry extends javax.swing.JFrame {
     private javax.swing.JTable tabelBarang;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
+private DefaultTableModel tableModel;
+private String sql;
+public void tampilData() throws SQLException{
+    tableModel = new DefaultTableModel();
+    tableModel.addColumn("Kode Barang");
+    tableModel.addColumn("Nama Barang");
+    tableModel.addColumn("Harga");
+    tabelBarang.setModel(tableModel);
+    java.sql.Connection conn=(Connection)config.configDB();
+    try{
+        java.sql.Statement stm = conn.createStatement();
+        sql ="SELECT * FROM daftar";
+        java.sql.ResultSet res = stm.executeQuery(sql);
+        while (res.next()){
+            tableModel.addRow(new Object[]{
+            res.getString("kodeb"),
+            res.getString("barang"),
+            res.getString("harga"),
+          });
+        }
+    }catch (SQLException e){
+        System.out.println(e.getMessage());
+    }
+}
 }
