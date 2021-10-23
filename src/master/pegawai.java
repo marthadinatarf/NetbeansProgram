@@ -202,6 +202,13 @@ public class pegawai extends javax.swing.JFrame {
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
+        if(id.getText().equals("")||nama.getText().equals("")||alamat.getText()
+                .equals("")||telp.getText().equals("")||username.getText().equals("")
+                ||password.getText().equals("")||konfirmasi.getText().equals(""))
+        {
+        JOptionPane.showMessageDialog(null, "Masukkan data dengan benar !","Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+        } else
         try{
             String sql = "INSERT INTO petugas VALUES ('"+id.getText()+"','"+nama.getText()+
                     "','"+alamat.getText()+"','"+telp.getText()+"','"+
