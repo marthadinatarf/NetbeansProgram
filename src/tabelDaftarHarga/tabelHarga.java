@@ -5,17 +5,31 @@
  */
 package tabelDaftarHarga;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import koneksi.config;
+import transaksi.transaksi;
+
 /**
  *
  * @author Riz
  */
 public class tabelHarga extends javax.swing.JFrame {
 
+    private String HARGABARANG;
+    private String NAMABARANG;
+    private String KODEBARANG;
+    public transaksi t;
+
     /**
      * Creates new form tabelHarga
      */
-    public tabelHarga() {
+    public tabelHarga() throws SQLException {
         initComponents();
+        tampilData();
     }
 
     /**
@@ -47,6 +61,11 @@ public class tabelHarga extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelHargaLaundry.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelHargaLaundryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelHargaLaundry);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, 190));
@@ -96,6 +115,21 @@ public class tabelHarga extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_kembaliActionPerformed
 
+    private void tabelHargaLaundryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelHargaLaundryMouseClicked
+        // TODO add your handling code here:
+        int mouseKlik = tabelHargaLaundry.rowAtPoint(evt.getPoint());
+        t.KODEBARANG = tabelHargaLaundry.getValueAt(mouseKlik, 0).toString();
+        t.NAMABARANG = tabelHargaLaundry.getValueAt(mouseKlik, 1).toString();
+        t.HARGABARANG = tabelHargaLaundry.getValueAt(mouseKlik, 2).toString();
+        try {
+            t.barangTerpilih();
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(tabelHarga.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_tabelHargaLaundryMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -126,7 +160,11 @@ public class tabelHarga extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new tabelHarga().setVisible(true);
+                try {
+                    new tabelHarga().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(tabelHarga.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -136,6 +174,36 @@ public class tabelHarga extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton kembali;
-    private javax.swing.JTable tabelHargaLaundry;
+    public javax.swing.JTable tabelHargaLaundry;
     // End of variables declaration//GEN-END:variables
+public DefaultTableModel tableModel;
+public String sql;
+public tabelHarga tp = null;
+public void tampilData() throws SQLException{
+    tableModel = new DefaultTableModel();
+    tableModel.addColumn("Kode Barang");
+    tableModel.addColumn("Nama Barang");
+    tableModel.addColumn("Harga");
+    tabelHargaLaundry.setModel(tableModel);
+    java.sql.Connection conn=(Connection)config.configDB();
+    try{
+        java.sql.Statement stm = conn.createStatement();
+        sql ="SELECT * FROM daftar";
+        java.sql.ResultSet res = stm.executeQuery(sql);
+        while (res.next()){
+            tableModel.addRow(new Object[]{
+            res.getString("kodeb"),
+            res.getString("barang"),
+            res.getString("harga"),
+          });
+        }
+    }catch (SQLException e){
+        System.out.println(e.getMessage());
+    }
+
+}
+
+    private void barangTerpilih() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

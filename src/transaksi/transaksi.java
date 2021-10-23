@@ -24,6 +24,25 @@ public class transaksi extends javax.swing.JFrame {
     /**
      * Creates new form transaksi
      */
+    
+    public String KODEBARANG, NAMABARANG, HARGABARANG;
+    public String getkode(){
+        return KODEBARANG;
+    }
+    public String getnamabarang(){
+        return NAMABARANG;
+    }
+    public String getharga(){
+        return HARGABARANG;
+    }
+    public void barangTerpilih() throws SQLException{
+        tabelHarga tb = new tabelHarga();
+        tb.t = this;
+        
+        kdBarang.setText(KODEBARANG);
+        namaBarang.setText(NAMABARANG);
+        harga.setText(HARGABARANG);
+    }
     public transaksi() throws SQLException {
         initComponents();
         this.tampilData();
@@ -62,7 +81,7 @@ public class transaksi extends javax.swing.JFrame {
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelTransaksi = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
+        cariKode = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -168,13 +187,13 @@ public class transaksi extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 780, 210));
 
-        jButton5.setText("Cari");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        cariKode.setText("Cari");
+        cariKode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                cariKodeActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
+        getContentPane().add(cariKode, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -345,10 +364,18 @@ public class transaksi extends javax.swing.JFrame {
         diskon.setText(tableModel.getValueAt(mouseKlik, 8).toString());
     }//GEN-LAST:event_tabelTransaksiMouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void cariKodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariKodeActionPerformed
         // TODO add your handling code here:
-        new tabelHarga().setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+        tabelHarga tb;
+        try {
+            tb = new tabelHarga();
+             tb.t = this;
+            tb.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(transaksi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_cariKodeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -390,10 +417,10 @@ public class transaksi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cariKode;
     private javax.swing.JButton delete;
     private javax.swing.JTextField diskon;
     private javax.swing.JTextField harga;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
