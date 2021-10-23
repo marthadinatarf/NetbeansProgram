@@ -110,8 +110,12 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pegawaiActionPerformed
-        // TODO add your handling code here:
-        new pegawai().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new pegawai().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_pegawaiActionPerformed
 

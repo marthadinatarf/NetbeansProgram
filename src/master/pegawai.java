@@ -242,7 +242,8 @@ public class pegawai extends javax.swing.JFrame {
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
         try{
-            String sql = "UPDATE member set nama=?,alamat=?,telp=? where id=?";
+            String sql = "UPDATE petugas set nama=?,alamat=?,telp=?,username=?,password=?,konfirmasi=? "
+                    + "where id=?";
             java.sql.Connection conn=(Connection)config.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, nama.getText());
