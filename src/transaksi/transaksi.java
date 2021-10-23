@@ -369,7 +369,7 @@ public class transaksi extends javax.swing.JFrame {
         tabelHarga tb;
         try {
             tb = new tabelHarga();
-             tb.t = this;
+            tb.t = this;
             tb.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(transaksi.class.getName()).log(Level.SEVERE, null, ex);
