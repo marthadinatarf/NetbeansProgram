@@ -48,12 +48,6 @@ public class daftarLaundry extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        kdBarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kdBarangActionPerformed(evt);
-            }
-        });
         getContentPane().add(kdBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 80, -1));
 
         jLabel1.setText("Kode Barang");
@@ -156,10 +150,6 @@ public class daftarLaundry extends javax.swing.JFrame {
         namaBarang.setText("");
         harga.setText("");
     }//GEN-LAST:event_simpanActionPerformed
-
-    private void kdBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kdBarangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kdBarangActionPerformed
 
     private void kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembaliActionPerformed
         // TODO add your handling code here:
