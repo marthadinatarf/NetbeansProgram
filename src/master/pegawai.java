@@ -7,7 +7,10 @@ package master;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import koneksi.config;
 import menuutama.menu;
 
@@ -20,8 +23,9 @@ public class pegawai extends javax.swing.JFrame {
     /**
      * Creates new form pegawai
      */
-    public pegawai() {
+    public pegawai() throws SQLException {
         initComponents();
+        tampilData();
         cek.setText("");
     }
 
@@ -54,7 +58,7 @@ public class pegawai extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         kembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelPegawai = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -135,7 +139,7 @@ public class pegawai extends javax.swing.JFrame {
         });
         getContentPane().add(kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelPegawai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -146,7 +150,12 @@ public class pegawai extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabelPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelPegawaiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelPegawai);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 380, 330));
 
@@ -184,11 +193,11 @@ public class pegawai extends javax.swing.JFrame {
 
     private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
         // TODO add your handling code here:
-        if(id.getText().length()>=6){
+       /** if(id.getText().length()>=6){
             JOptionPane.showMessageDialog(null,"id harus 6 digit!","Kesalahan",+ JOptionPane.ERROR_MESSAGE);
             id.setText("");
             return;
-        }
+        }**/
     }//GEN-LAST:event_idKeyTyped
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
@@ -202,7 +211,7 @@ public class pegawai extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
-            //tampilData();
+            tampilData();
                 id.setText("");
                 nama.setText("");
                 alamat.setText("");
@@ -238,7 +247,7 @@ public class pegawai extends javax.swing.JFrame {
             pst.setString(7, id.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null,"Data berhasil disimpan.");
-            //tampilData();
+            tampilData();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Data gagal Disimpan!","Kesalahan", JOptionPane.ERROR_MESSAGE);
                 //Logger.getLogger(member.class.getName()).log(Level.SEVERE, null, ex);
@@ -264,7 +273,7 @@ public class pegawai extends javax.swing.JFrame {
               java.sql.PreparedStatement pst = conn.prepareStatement(sql);
               pst.executeUpdate();
               JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
-              //tampilData();
+              tampilData();
                  id.setText("");
                  nama.setText("");
                  alamat.setText("");
@@ -277,6 +286,18 @@ public class pegawai extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void tabelPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPegawaiMouseClicked
+        // TODO add your handling code here:
+        int mouseKlik = tabelPegawai.getSelectedRow();
+        id.setText(tableModel.getValueAt(mouseKlik, 0).toString());
+        nama.setText(tableModel.getValueAt(mouseKlik, 1).toString());
+        alamat.setText(tableModel.getValueAt(mouseKlik, 2).toString());
+        telp.setText(tableModel.getValueAt(mouseKlik, 3).toString());
+        username.setText(tableModel.getValueAt(mouseKlik,4).toString());
+        password.setText(tableModel.getValueAt(mouseKlik, 5).toString());
+        konfirmasi.setText(tableModel.getValueAt(mouseKlik, 6).toString());
+    }//GEN-LAST:event_tabelPegawaiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -308,7 +329,11 @@ public class pegawai extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new pegawai().setVisible(true);
+                try {
+                    new pegawai().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(pegawai.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -327,14 +352,46 @@ public class pegawai extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton kembali;
     private javax.swing.JPasswordField konfirmasi;
     private javax.swing.JTextField nama;
     private javax.swing.JPasswordField password;
     private javax.swing.JButton simpan;
+    private javax.swing.JTable tabelPegawai;
     private javax.swing.JTextField telp;
     private javax.swing.JButton update;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
+private DefaultTableModel tableModel;
+private String sql;
+public void tampilData() throws SQLException{
+    tableModel = new DefaultTableModel();
+    tableModel.addColumn("ID Pegawai");
+    tableModel.addColumn("Nama Pegawai");
+    tableModel.addColumn("Alamat");
+    tableModel.addColumn("Telp");
+    tableModel.addColumn("Username");
+    tableModel.addColumn("Password");
+    tableModel.addColumn("Konfirmasi");
+    tabelPegawai.setModel(tableModel);
+    java.sql.Connection conn=(Connection)config.configDB();
+    try{
+        java.sql.Statement stm = conn.createStatement();
+        sql ="SELECT * FROM petugas";
+        java.sql.ResultSet res = stm.executeQuery(sql);
+        while (res.next()){
+            tableModel.addRow(new Object[]{
+            res.getString("id"),
+            res.getString("nama"),
+            res.getString("alamat"),
+            res.getString("telp"),
+            res.getString("username"),
+            res.getString("password"),
+            res.getString("konfirmasi")
+        });
+        }
+    }catch (SQLException e){
+        System.out.println(e.getMessage());
+    }
+}
 }
