@@ -83,6 +83,7 @@ public class transaksi extends javax.swing.JFrame {
         tabelTransaksi = new javax.swing.JTable();
         cariKode = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        cetakStruk = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -209,6 +210,9 @@ public class transaksi extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, -1));
+
+        cetakStruk.setText("Cetak Struk");
+        getContentPane().add(cetakStruk, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, -1, -1));
 
         setSize(new java.awt.Dimension(814, 524));
         setLocationRelativeTo(null);
@@ -418,6 +422,7 @@ public class transaksi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cariKode;
+    private javax.swing.JButton cetakStruk;
     private javax.swing.JButton delete;
     private javax.swing.JTextField diskon;
     private javax.swing.JTextField harga;
