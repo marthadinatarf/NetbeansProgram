@@ -25,7 +25,7 @@ List of overall feature in this project
 | :- | :------------- | :--------------------------------------------------------------------- |
 | 1. | Register       | Authentication process                                                 |
 | 2. | Login          | Authentication process                                                 |
-| 3. | Member         | Create, Read, Update, Delete, Cetak Kartu Member                       |
+| 3. | Member         | Create, Read, Update, Delete member                                    |
 | 4. | CRUD Daftar Harga Laundry      | Create, Read, Update , Delete data harga laundry       |
 | 5. | CRUD Transaksi    | Create, Read, Update , Delete data transaksi                        |                 
 | 6. | Cetak Laporan  | Cetak Laporan transaksi                                                |
